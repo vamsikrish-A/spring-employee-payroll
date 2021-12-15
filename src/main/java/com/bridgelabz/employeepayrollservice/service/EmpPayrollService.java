@@ -1,46 +1,56 @@
 package com.bridgelabz.employeepayrollservice.service;
 
+import com.bridgelabz.employeepayrollservice.builder.EmployeePayrollBuilder;
+import com.bridgelabz.employeepayrollservice.controller.EmployeePayroll;
 import com.bridgelabz.employeepayrollservice.dto.EmployeePayrollDto;
+import com.bridgelabz.employeepayrollservice.dto.ResponseDto;
 import com.bridgelabz.employeepayrollservice.entity.EmployeePayrollData;
+import com.bridgelabz.employeepayrollservice.exception.BadRequestException;
+import com.bridgelabz.employeepayrollservice.exception.DataNotFoundException;
+import com.bridgelabz.employeepayrollservice.repository.EmployeeRepo;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.persistence.Id;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class EmpPayrollService implements IEmpPayrollService{
+public class EmpPayrollService {
+    private static final String EMPLOYEE_DATA_ADDED_SUCCESSFULLY = "Employee Added SuccessFully!!";
+    private static final String EMPLOYEE_DATA_UPDATED_SUCCESSFULLY = "Employee Data Updated Successfully";
+    private static final String EMPLOYEE_DATA_NOT_FOUND = "Data not found to ID: ";
+    private EmployeePayrollBuilder employeePayrollBuilder;
+    @Autowired
+    private EmployeeRepo employeeRepo;
 
-    List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
-
-    @Override
-    public List<EmployeePayrollData> getEmployeepayrollData() {
-        return employeePayrollDataList;
+    public ResponseDto saveEmployeeData(EmployeePayrollDto employeePayrollDto) {
+        if (employeePayrollDto == null) {
+            throw new BadRequestException ("Employee details are Null.");
+        }
+        EmployeePayrollData employeePayrollData = new EmployeePayrollData();
+        employeePayrollData = employeePayrollBuilder.buildEmployeePayrollEntity(employeePayrollDto, employeePayrollData);
+        employeeRepo.save(employeePayrollData);
+        return new ResponseDto(EMPLOYEE_DATA_ADDED_SUCCESSFULLY, HttpStatus.CREATED);
     }
 
-    @Override
-    public EmployeePayrollData getEmployeePayrollDataById(int employeeId) {
-        return employeePayrollDataList.get(employeeId);
+    public List<EmployeePayrollData> getEmployeeData() {
+        return employeeRepo.findAll();
     }
 
-    @Override
-    public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDto employeePayrollDto) {
-        EmployeePayrollData employeePayrollData = null;
-        employeePayrollData = new EmployeePayrollData(employeePayrollDataList.size()+1, employeePayrollDto);
-        employeePayrollDataList.add(employeePayrollData);
-        return employeePayrollData;
+    public EmployeePayrollData getEmployeeDataById(int id) {
+        return employeeRepo.findById(id).orElseThrow(() -> new DataNotFoundException(EMPLOYEE_DATA_NOT_FOUND+" "+id));
     }
-
-    @Override
-    public EmployeePayrollData updateEmployeepayrollData(int empId, EmployeePayrollDto employeePayrollDto) {
-        EmployeePayrollData employeePayrollData = this.getEmployeePayrollDataById(empId);
-        employeePayrollData.setName(employeePayrollDto.name);
-        employeePayrollData.setSalary(employeePayrollDto.salary);
-        employeePayrollDataList.set(empId, employeePayrollData);
-        return employeePayrollData;
+    public  ResponseDto updateEmployeeData(int employeeId, EmployeePayrollDto employeePayrollDto) {
+        EmployeePayrollData employeePayrollData = getEmployeeDataById(employeeId);
+        employeePayrollData = employeePayrollBuilder.buildEmployeePayrollEntity(employeePayrollDto, employeePayrollData);
+        employeeRepo.save(employeePayrollData);
+        return new ResponseDto(EMPLOYEE_DATA_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
     }
-
-    @Override
-    public void deleteEmployeePayrollData(int employeeId) {
-        employeePayrollDataList.remove(employeeId);
+    public String deleteProduct(int id) {
+        employeeRepo.deleteById(id);
+        return "Employee with Id: "+id+" deleted !!";
     }
 }
