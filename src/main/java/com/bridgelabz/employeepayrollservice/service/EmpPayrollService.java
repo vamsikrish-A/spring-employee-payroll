@@ -22,6 +22,7 @@ public class EmpPayrollService {
     private static final String EMPLOYEE_DATA_ADDED_SUCCESSFULLY = "Employee Added SuccessFully!!";
     private static final String EMPLOYEE_DATA_UPDATED_SUCCESSFULLY = "Employee Data Updated Successfully";
     private static final String EMPLOYEE_DATA_NOT_FOUND = "Data not found to ID: ";
+    @Autowired
     private EmployeePayrollBuilder employeePayrollBuilder;
     @Autowired
     private EmployeeRepo employeeRepo;
@@ -49,8 +50,8 @@ public class EmpPayrollService {
         employeeRepo.save(employeePayrollData);
         return new ResponseDto(EMPLOYEE_DATA_UPDATED_SUCCESSFULLY, HttpStatus.ACCEPTED);
     }
-    public String deleteProduct(int id) {
+    public ResponseDto deleteProduct(int id) {
         employeeRepo.deleteById(id);
-        return "Employee with Id: "+id+" deleted !!";
+        return new ResponseDto("Employee with Id: "+id+" deleted !!", HttpStatus.ACCEPTED);
     }
 }
