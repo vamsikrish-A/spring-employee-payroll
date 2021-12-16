@@ -11,4 +11,8 @@ public class ResponseDto {
         this.message = message;
         this.data = data;
     }
+
+    public ResponseDto() {
+
+    }
 }
