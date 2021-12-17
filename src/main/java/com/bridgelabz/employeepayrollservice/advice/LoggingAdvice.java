@@ -1,5 +1,9 @@
 package com.bridgelabz.employeepayrollservice.advice;
-
+/**
+ * @Purpose: Logger Object is Used to log messages for a specific system or application component
+ * @author: Vamsi Krishna
+ * @since: 13/12/2021
+ */
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.message.ObjectMessage;
@@ -22,6 +26,12 @@ public class LoggingAdvice {
 
     }
 
+    /**
+     * @Purpose: this method is used for action taken by an aspect at a particular join.
+     * @param proceedingJoinPoint the code execution jumps to next advice or to the target method
+     * @return object of proceedingJoinPoint.proceed() method
+     * @throws Throwable
+     */
     @Around("myPointCut()")
     public Object applicationLogger(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         ObjectMapper mapper = new ObjectMapper();

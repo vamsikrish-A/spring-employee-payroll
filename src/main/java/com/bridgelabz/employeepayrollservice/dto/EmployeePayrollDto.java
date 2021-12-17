@@ -1,5 +1,9 @@
 package com.bridgelabz.employeepayrollservice.dto;
-
+/**
+ * @purpose: Data transfer Object , is to shift the data in expensive remote calls.
+ * @author: VamsiKrishna
+ * @Since; 13/12/2021
+ */
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

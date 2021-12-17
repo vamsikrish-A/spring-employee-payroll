@@ -24,6 +24,6 @@ public class EmployeePayrollBuilderTest {
         Assertions.assertEquals(employeePayrollDto.getName(), employeePayrollData.getName());
         Assertions.assertEquals(employeePayrollDto.getDept(), employeePayrollData.getDept());
         Assertions.assertEquals(employeePayrollDto.getSalary(), employeePayrollData.getSalary());
-
     }
+
 }

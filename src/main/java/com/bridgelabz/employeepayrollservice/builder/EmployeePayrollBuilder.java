@@ -1,5 +1,9 @@
 package com.bridgelabz.employeepayrollservice.builder;
-
+/**
+ * @Purpose: used to copy the properties of DTO and Entity class variables
+ * @author: Vamsi Krishna
+ * @since: 13/12/2021
+ */
 import com.bridgelabz.employeepayrollservice.dto.EmployeePayrollDto;
 import com.bridgelabz.employeepayrollservice.entity.EmployeePayrollData;
 import org.springframework.beans.BeanUtils;

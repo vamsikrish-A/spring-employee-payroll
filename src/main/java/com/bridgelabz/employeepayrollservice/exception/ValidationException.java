@@ -1,4 +1,9 @@
 package com.bridgelabz.employeepayrollservice.exception;
+/**
+ * @Purpose: validation Exception handles the ResponseEntityExceptions like Http method body, header and status codes.
+ * @author: VamsiKrishna
+ * @since: 13-12-2021.
+ */
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;

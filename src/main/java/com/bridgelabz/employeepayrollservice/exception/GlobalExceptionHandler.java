@@ -1,5 +1,10 @@
 package com.bridgelabz.employeepayrollservice.exception;
-
+/**
+ * @purpose: @ControllerAdvice annotation which allows to handle exceptions across te whole application in one
+ *              Global Handling Component
+ * @author: VamsiKrishna
+ * @since: 13-12-2021
+ */
 import com.bridgelabz.employeepayrollservice.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
